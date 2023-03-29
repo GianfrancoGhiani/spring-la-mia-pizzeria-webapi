@@ -1,0 +1,3 @@
+INSERT INTO pizzas (description, name, price)VALUES('La sua ricetta è a base di pomodoro, mozzarella, funghi, prosciutto cotto, olive e carciofi: è senza dubbio la pizza più ricca mai realizzata, in grado di soddisfare anche il palato più esigente!', 'Capricciosa', 4.50)
+INSERT INTO pizzas (description, name, price)VALUES('La marinara è una pizza napoletana condita con pomodori, origano, aglio, olio extra vergine di oliva e talvolta basilico fresco.', 'Marinara', 3.50)
+INSERT INTO pizzas (description, name, price)VALUES('La pizza alla boscaiola è una delle pizze bianche più soffici e gustose. A base di funghi shiitake, salsiccia, prezzemolo, aglio, erbe aromatiche e olio extra vergine di oliva.', 'Boscaiola', 6.50)

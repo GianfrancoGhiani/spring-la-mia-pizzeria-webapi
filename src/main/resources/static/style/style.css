@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@700&display=swap');
+.wrapper{
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://thumbs.dreamstime.com/b/pizza-pattern-drawing-background-junk-food-seamless-hand-drawn-wrapping-decoration-print-pizza-pattern-drawing-background-151935075.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.content{
+    background-color: rgba(255,255,255,0.75);
+    padding: 3rem 7rem;
+    border-radius: 1rem;
+}
+tr *{
+    padding: 0.7rem;
+}
+h1{
+    font-family: 'Alkatra', cursive;
+}
+th{
+    font-weight: 800;
+}
+td{
+    font-weight: 700;
+}
