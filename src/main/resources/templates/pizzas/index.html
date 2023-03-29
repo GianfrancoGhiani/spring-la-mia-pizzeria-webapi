@@ -9,22 +9,30 @@
 <div class="d-flex align-items-center justify-content-center flex-column wrapper">
     <div class="content">
     <h1>Menu</h1>
-    <table th:if="${list.size >0}">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="pizza : ${list}" th:object="${pizza}">
-            <td th:text="*{getName()}"></td>
-            <td th:text="*{getPrice()}" class="text-center"></td>
-            <td th:text="*{getDescription()}"></td>
-        </tr>
-        </tbody>
-    </table>
+        <div  th:if="${list.size >0}">
+            <form action="/search" method="get">
+                <input type="text" name="name" class="input" placeholder="Pizza Name">
+                <button type="submit" class="btn">Search</button>
+            </form>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pizza : ${list}" th:object="${pizza}">
+                    <td th:text="*{getName()}"></td>
+                    <td th:text="|€ *{getPrice()}|" class="text-center"></td>
+                    <td th:text="*{getDescription()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     <p th:unless="${list.size >0}" class="alert alert-danger">No pizzas found</p>
     </div>
 </div>
