@@ -11,7 +11,7 @@
     padding: 3rem 7rem;
     border-radius: 1rem;
 }
-tr *{
+tr th, tr td{
     padding: 0.7rem;
 }
 h1{
@@ -22,6 +22,14 @@ th{
 }
 td{
     font-weight: 600;
+}
+td a, td a:hover{
+    text-decoration:none;
+    color: #000;
+}
+.back-arrow, .back-arrow:hover{
+    font-size: 20px;
+    color: black;
 }
 
 

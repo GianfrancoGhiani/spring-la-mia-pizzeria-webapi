@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <div th:replace="~{fragments/head :: headResources}"></div>
+    <div th:replace="~{fragments/head :: font-awesome}"></div>
+
+
     <title>Pizzas</title>
 </head>
 <body>
@@ -10,8 +13,8 @@
     <div class="content">
     <h1>Menu</h1>
         <div  th:if="${list.size >0}">
-            <form action="/search" method="get">
-                <input type="text" name="name" class="input" placeholder="Pizza Name">
+            <form action="/pizzas" method="get">
+                <input type="text" name="name" class="input" placeholder="Pizza Name" th:value="${queryValue}">
                 <button type="submit" class="btn">Search</button>
             </form>
 
@@ -25,7 +28,9 @@
                 </thead>
                 <tbody>
                 <tr th:each="pizza : ${list}" th:object="${pizza}">
-                    <td th:text="*{getName()}"></td>
+                    <td>
+                        <a th:href="@{/pizzas/{id}(id= *{getId()})}" th:text="*{getName()}" title="View Details"></a>
+                    </td>
                     <td th:text="|€ *{getPrice()}|" class="text-center"></td>
                     <td th:text="*{getDescription()}"></td>
                 </tr>

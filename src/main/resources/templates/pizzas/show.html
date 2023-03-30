@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="~{fragments/head :: headResources}"></div>
+    <div th:replace="~{fragments/head :: font-awesome}"></div>
+    <title>Pizza [[${pizza.getName()}]]</title>
+</head>
+<body>
+<div class="d-flex align-items-center justify-content-center flex-column wrapper" th:object="${pizza}">
+    <div class="content">
+        <a th:href="@{/pizzas}" class="back-arrow"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1>Pizza [[*{getName()}]]</h1>
+        <p>[[*{getDescription()}]]</p>
+    </div>
+</div>
+
+</body>
+</html>
