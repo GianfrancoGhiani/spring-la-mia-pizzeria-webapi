@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+  <div th:replace="~{fragments/head :: headResources}"></div>
+  <div th:replace="~{fragments/head :: font-awesome}"></div>
+    <title>Pizza Creation</title>
+</head>
+<body>
+<div class="d-flex align-items-center justify-content-center flex-column wrapper" th:object="${pizza}">
+    <div class="content">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Create a new Pizza</h1>
+            <a th:href="@{/pizzas}" class="btn btn-warning rounded-circle" title="Create a new Pizza"><i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+    <form th:action="@{/pizzas/create}" method="post" th:object="${pizza}" class="row">
+        <div class="col-8 py-3">
+            <label for="name">Name:</label>
+            <input class="form-control form-control-sm" id="name" type="text" placeholder="Margherita" th:field="*{name}">
+        </div>
+        <div class="col-2 py-3 offset-2">
+            <label for="price">Price</label>
+            <input class="form-control form-control-sm" id="price" type="number" step="0.01" min="0.01" placeholder=".form-control-sm" th:field="*{price}">
+        </div>
+        <div class="col-12 py-3 d-flex flex-column justify-content-center">
+            <label class="col" for="description">Description:</label>
+            <textarea class="col-12 form-control" id="description" th:field="*{description}" rows="5"></textarea>
+        </div>
+        <div class="col py-3">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="reset" class="btn btn-warning">Reset</button>
+        </div>
+    </form>
+    </div>
+</div>
+
+</body>
+</html>
