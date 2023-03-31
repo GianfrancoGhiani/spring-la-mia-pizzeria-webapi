@@ -1,6 +1,10 @@
 package org.learning.springlamiapizzeriacrud.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Positive;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
@@ -10,10 +14,16 @@ public class Pizza {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
+    @NotEmpty(message = "the name cannot be empty")
+    @Max(value = 30, message = "This name is too long (max 30 char)")
     private String name;
     @Lob
+    @Column(nullable = false)
+    @NotEmpty(message = "the description cannot be empty")
+    @Max(value = 300, message = "This description is too long (max 300 char)")
     private String description;
     @Column(nullable = false)
+    @Positive(message = "the price must be greater than 0")
     private double price;
 
     public Integer getId() {
