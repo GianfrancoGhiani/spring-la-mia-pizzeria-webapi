@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,14 +14,14 @@ public class Pizza {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotEmpty(message = "the name cannot be empty")
-    @Max(value = 30, message = "This name is too long (max 30 char)")
+    @Size(max = 30, message = "This name is too long (max 30 char)")
     private String name;
     @Lob
     @Column(nullable = false)
     @NotEmpty(message = "the description cannot be empty")
-    @Max(value = 300, message = "This description is too long (max 300 char)")
+    @Size(max = 300, message = "This description is too long (max 300 char)")
     private String description;
     @Column(nullable = false)
     @Positive(message = "the price must be greater than 0")

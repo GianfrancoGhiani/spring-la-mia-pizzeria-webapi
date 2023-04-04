@@ -21,6 +21,13 @@ public class PizzaService {
         pizzaToDB.setPrice(form.getPrice());
         return pizzaRepository.save(pizzaToDB);
     }
+    public Pizza updatePizza(Pizza form, Integer id){
+        Pizza pizzaToDB = getPizzaById(form.getId());
+        pizzaToDB.setName(form.getName());
+        pizzaToDB.setDescription(form.getDescription());
+        pizzaToDB.setPrice(form.getPrice());
+        return pizzaRepository.save(pizzaToDB);
+    }
 
     public List<Pizza> getAllPizzas(){
         return pizzaRepository.findAll();
@@ -32,4 +39,24 @@ public class PizzaService {
     public Pizza getPizzaById(Integer id) throws RuntimeException{
         return pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("not pizzas founded"));
     }
+
+    public boolean deleteById(Integer id) throws RuntimeException{
+        //try to find the pizza into the DB
+        pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("not pizzas founded"));
+        //if founded it will continue, else it throws
+        try{
+            //'cause pizza was fins, delete this item
+            pizzaRepository.deleteById(id);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+    public boolean isUniqueName(Pizza pizza){
+        if (pizza.getId() == null){
+            return !pizzaRepository.existsByName(pizza.getName());
+        }
+        return !pizzaRepository.existsByNameAndIdNot(pizza.getName(), pizza.getId());
+    };
+
 }
