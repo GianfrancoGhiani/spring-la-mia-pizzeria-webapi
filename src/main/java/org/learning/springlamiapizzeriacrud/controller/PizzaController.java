@@ -1,6 +1,7 @@
 package org.learning.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
+import org.learning.springlamiapizzeriacrud.model.AlertMessage;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
 import org.learning.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.learning.springlamiapizzeriacrud.service.PizzaService;
@@ -59,11 +60,13 @@ public class PizzaController {
         return "/pizzas/editCreate";
     }
     @PostMapping("/create")
-    public String createDBInstance(@Valid @ModelAttribute("pizza") Pizza form,  BindingResult bindingResult, Model model){
+    public String createDBInstance(@Valid @ModelAttribute("pizza") Pizza form,  BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
             return "/pizzas/editCreate";
         }
         pizzaService.createPizza(form);
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.SUCCESS, "Pizza " +form.getName() + " created"));
+
         return "redirect:/pizzas";
     }
     @GetMapping("/edit/{id}")
@@ -78,7 +81,7 @@ public class PizzaController {
 
     }
     @PostMapping("/edit/{id}")
-    public String editUpdate(@Valid @ModelAttribute("pizza") Pizza form,  BindingResult bindingResult, Model model,  @PathVariable("id") Integer id){
+    public String editUpdate(@Valid @ModelAttribute("pizza") Pizza form,  BindingResult bindingResult, Model model,  @PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
         if (!pizzaService.isUniqueName(form)){
             bindingResult.addError(new FieldError("pizza", "name", form.getName(), false, null, null, "Name must be unique"));
         }
@@ -88,6 +91,7 @@ public class PizzaController {
 
         try {
             Pizza pizza = pizzaService.updatePizza(form, id);
+            redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.SUCCESS, "Pizza " +form.getName() + " updated"));
             return "redirect:/pizzas/"+ Integer.toString(pizza.getId());
         } catch (RuntimeException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This pizza is not in our database");
@@ -98,12 +102,12 @@ public class PizzaController {
         try{
             boolean deleted = pizzaService.deleteById(id);
             if (deleted){
-                redirectAttributes.addFlashAttribute("message", "Pizza deleted");
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.SUCCESS, "Pizza deleted"));
             } else {
-                redirectAttributes.addFlashAttribute("message", "Unable to delete this item");
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.ERROR,"Unable to delete this item"));
             }
         }catch (Exception e){
-                redirectAttributes.addFlashAttribute("message", "No Pizza founded");
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.ERROR,"No Pizza founded"));
         }
         return "redirect:/pizzas";
     }

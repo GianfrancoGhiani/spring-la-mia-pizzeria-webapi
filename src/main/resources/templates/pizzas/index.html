@@ -15,7 +15,7 @@
             <div>
                 <h1>Menu</h1>
                 <p th:unless="${list.size >0}" class="alert alert-danger">No pizzas found</p>
-                <p th:if="${message}" th:text="${message}"></p>
+                <p th:if="${message}" class="alert fade show" th:classAppend="${#strings.equals(message.type, 'SUCCESS')} ? alert-success : alert-danger" th:text="${message.text}"></p>
             </div>
 
             <a th:href="@{/pizzas/create}" class="btn btn-primary rounded-circle" title="Create a new Pizza"><i class="fa-solid fa-plus"></i></a>
