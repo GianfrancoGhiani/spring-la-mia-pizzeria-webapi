@@ -38,8 +38,11 @@ public class Pizza {
         return discounts;
     }
 
+
+
     public void setDiscounts(List<SpecialDiscount> discounts) {
         this.discounts = discounts;
+
     }
     public Integer getId() {
         return id;
