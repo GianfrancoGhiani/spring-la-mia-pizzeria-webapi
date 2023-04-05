@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Entity
 @Table(name = "pizzas")
 public class Pizza {
@@ -27,6 +29,18 @@ public class Pizza {
     @Positive(message = "the price must be greater than 0")
     private double price;
 
+
+
+
+    @OneToMany(mappedBy = "pizza")
+    private List<SpecialDiscount> discounts;
+    public List<SpecialDiscount> getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(List<SpecialDiscount> discounts) {
+        this.discounts = discounts;
+    }
     public Integer getId() {
         return id;
     }

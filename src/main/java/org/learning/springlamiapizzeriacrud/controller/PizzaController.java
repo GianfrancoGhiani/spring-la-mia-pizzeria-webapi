@@ -2,8 +2,8 @@ package org.learning.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
 import org.learning.springlamiapizzeriacrud.model.AlertMessage;
+import org.learning.springlamiapizzeriacrud.model.AlertMessage.AlertMessageType;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
-import org.learning.springlamiapizzeriacrud.repository.PizzaRepository;
 import org.learning.springlamiapizzeriacrud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +23,6 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/pizzas")
 public class PizzaController {
-    @Autowired
-    private PizzaRepository pizzaRepository;
     @Autowired
     private PizzaService pizzaService;
 
@@ -65,7 +63,7 @@ public class PizzaController {
             return "/pizzas/editCreate";
         }
         pizzaService.createPizza(form);
-        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.SUCCESS, "Pizza " +form.getName() + " created"));
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " +form.getName() + " created"));
 
         return "redirect:/pizzas";
     }
@@ -91,7 +89,7 @@ public class PizzaController {
 
         try {
             Pizza pizza = pizzaService.updatePizza(form, id);
-            redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.SUCCESS, "Pizza " +form.getName() + " updated"));
+            redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " +form.getName() + " updated"));
             return "redirect:/pizzas/"+ Integer.toString(pizza.getId());
         } catch (RuntimeException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This pizza is not in our database");
@@ -102,12 +100,12 @@ public class PizzaController {
         try{
             boolean deleted = pizzaService.deleteById(id);
             if (deleted){
-                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.SUCCESS, "Pizza deleted"));
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza deleted"));
             } else {
-                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.ERROR,"Unable to delete this item"));
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR,"Unable to delete this item"));
             }
         }catch (Exception e){
-                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.ERROR,"No Pizza founded"));
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR,"No Pizza founded"));
         }
         return "redirect:/pizzas";
     }

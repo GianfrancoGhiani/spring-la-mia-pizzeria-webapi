@@ -37,12 +37,12 @@ public class PizzaService {
     }
 
     public Pizza getPizzaById(Integer id) throws RuntimeException{
-        return pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("not pizzas founded"));
+        return pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("no pizzas founded"));
     }
 
     public boolean deleteById(Integer id) throws RuntimeException{
         //try to find the pizza into the DB
-        pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("not pizzas founded"));
+        pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("no pizzas founded"));
         //if founded it will continue, else it throws
         try{
             //'cause pizza was fins, delete this item
