@@ -51,7 +51,7 @@ public class Pizza {
         if (hasAvailableDiscount()){
             double tempPrice = this.price;
             for (SpecialDiscount d: discounts) {
-                if (d.getExpiringDate().isAfter(LocalDate.now())){
+                if (!d.getExpiringDate().isBefore(LocalDate.now()) && !d.getStartingDate().isAfter(LocalDate.now())){
                     tempPrice = tempPrice - (tempPrice * (d.getValue()/100));
                 }
             }
