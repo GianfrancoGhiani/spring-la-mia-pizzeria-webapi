@@ -49,29 +49,10 @@
         </div>
         <div >
             <hr>
-            <div class="row">
-                <h5 class="col-3">Ingredients:</h5>
-                <div th:replace="~{fragments/body :: AlertMessage}"></div>
-                <a class="col-auto btn btn-primary" th:href="@{/discount/create(p_id=${pizza.id})}">Add</a>
-            </div>
-
-            <table th:if="${pizza.discounts.size > 0}">
-                <thead>
-                <tr>
-                    <th class="text-center">Name</th>
-                    <th class="text-center">Description</th>
-                    <th class="text-center">Edit</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="i : ${pizza.ingredients}" th:object="${i}">
-                    <td th:text="*{name}"></td>
-                    <td class="text-center" th:text="*{description}"></td>
-                    <td></td>
-
-                </tr>
-                </tbody>
-            </table>
+            <h5>Ingredient List:</h5>
+            <ul>
+                <li th:each="i : *{ingredients}" th:text="${i.name}"></li>
+            </ul>
 
         </div>
     </div>

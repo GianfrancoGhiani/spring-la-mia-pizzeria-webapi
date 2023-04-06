@@ -21,4 +21,7 @@ public class IngredientService {
         newIngredient.setDescription(ingredient.getDescription());
         return ingredientRepository.save(newIngredient);
     }
+    public void deleteById(Integer id){
+        ingredientRepository.deleteById(id);
+    }
 }

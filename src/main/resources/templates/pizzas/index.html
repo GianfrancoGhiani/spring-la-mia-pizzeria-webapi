@@ -18,8 +18,12 @@
                 <div th:replace="~{fragments/body :: AlertMessage}"></div>
 
             </div>
+            <div>
+                <a th:href="@{/ingredients}">Our ingredients</a>
+                <a th:href="@{/pizzas/create}" class="btn btn-primary rounded-circle" title="Create a new Pizza"><i class="fa-solid fa-plus"></i></a>
+            </div>
 
-            <a th:href="@{/pizzas/create}" class="btn btn-primary rounded-circle" title="Create a new Pizza"><i class="fa-solid fa-plus"></i></a>
+
 
         </div>
 
