@@ -18,8 +18,8 @@
         <hr>
             <div class="row">
                 <h5 class="col-3" th:text="${pizza.discounts.size > 0} ? 'Active Discounts:' : 'No Active Discounts'"></h5>
-                <p th:if="${message}" class="alert fade show" th:classAppend="${#strings.equals(message.type, 'SUCCESS')} ? alert-success : alert-danger" th:text="${message.text}"></p>
 
+                <div th:replace="~{fragments/body :: AlertMessage}"></div>
                 <a class="col-auto btn btn-primary" th:href="@{/discount/create(p_id=${pizza.id})}">Add a Discount</a>
             </div>
 

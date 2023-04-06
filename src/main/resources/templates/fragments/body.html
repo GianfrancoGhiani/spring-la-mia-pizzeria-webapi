@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p th:fragment="AlertMessage" th:if="${message}" class="alert fade show" th:classAppend="${#strings.equals(message.type, 'SUCCESS')} ? alert-success : alert-danger" th:text="${message.text}"></p>
+
+</body>
+</html>
