@@ -68,7 +68,22 @@ public class DiscountController {
         }
         System.out.println(d_id);
         discountService.updateDiscount(discount, d_id);
-        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Discount Added"));
+        redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Discount " + discount.getTitle() +" Updated"));
         return "redirect:/pizzas/"+Integer.toString(discount.getPizza().getId());
+    }
+    @GetMapping("/delete/{d_id}")
+    public String delete(@PathVariable Integer d_id, RedirectAttributes redirectAttributes) {
+        Integer pizzaId = discountService.getDiscountById(d_id).getPizza().getId();
+        try{
+            boolean deleted = discountService.deleteById(d_id);
+            if (deleted){
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Discount deleted"));
+            } else {
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR,"Unable to delete this item"));
+            }
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR,"No Discount founded"));
+        }
+        return "redirect:/pizzas/" + pizzaId;
     }
 }

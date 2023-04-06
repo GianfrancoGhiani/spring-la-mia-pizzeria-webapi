@@ -12,10 +12,14 @@
         <a th:href="@{/pizzas}" class="back-arrow"><i class="fa-solid fa-arrow-left"></i></a>
         <h1>Pizza [[*{getName()}]]</h1>
         <p>[[*{getDescription()}]]</p>
+        <h5 >Price: <span th:classAppend="*{hasAvailableDiscount()}? 'text-decoration-line-through' : ''">€ [[*{getPrice()}]]</span> <h4
+                th:if="*{hasAvailableDiscount()}">€ [[*{getDiscountedPrice()}]]</h4></h5>
         <div >
         <hr>
             <div class="row">
                 <h5 class="col-3" th:text="${pizza.discounts.size > 0} ? 'Active Discounts:' : 'No Active Discounts'"></h5>
+                <p th:if="${message}" class="alert fade show" th:classAppend="${#strings.equals(message.type, 'SUCCESS')} ? alert-success : alert-danger" th:text="${message.text}"></p>
+
                 <a class="col-auto btn btn-primary" th:href="@{/discount/create(p_id=${pizza.id})}">Add a Discount</a>
             </div>
 
@@ -23,6 +27,7 @@
             <thead>
             <tr>
                 <th class="text-center">Name</th>
+                <th class="text-center">Value</th>
                 <th class="text-center">Starting</th>
                 <th class="text-center">Expiring</th>
                 <th class="text-center">Edit</th>
@@ -30,13 +35,12 @@
             </thead>
             <tbody>
             <tr th:each="d : ${pizza.discounts}" th:object="${d}">
-                <td>
-                    <a  th:text="*{title}" title="View Details"></a>
-                </td>
+                <td th:text="*{title}"></td>
+                <td class="text-center" th:text="*{value}"></td>
                 <td th:text="*{startingDate}" class="text-center"></td>
                 <td th:text="*{expiringDate}"></td>
                 <td><a th:href="@{/discount/edit/{d_id}(d_id=${d.id})}" class="btn btn-primary me-2"><i class="fa-solid fa-pen"></i></a>
-<!--                    <a th:href="@{/pizzas/}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>-->
+                    <a th:href="@{/discount/delete/{d_id}(d_id=${d.id})}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                 </td>
             </tr>
             </tbody>

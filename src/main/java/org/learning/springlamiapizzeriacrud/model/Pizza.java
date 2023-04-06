@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -38,8 +39,26 @@ public class Pizza {
         return discounts;
     }
 
-
-
+    public boolean hasAvailableDiscount(){
+        if (discounts != null){
+            for (SpecialDiscount d: discounts) {
+                if (d.getExpiringDate().isAfter(LocalDate.now()))return true;
+            }
+        }
+        return false;
+    }
+    public double getDiscountedPrice(){
+        if (hasAvailableDiscount()){
+            double tempPrice = this.price;
+            for (SpecialDiscount d: discounts) {
+                if (d.getExpiringDate().isAfter(LocalDate.now())){
+                    tempPrice = tempPrice - (tempPrice * (d.getValue()/100));
+                }
+            }
+            return tempPrice;
+        }
+        return price;
+    }
     public void setDiscounts(List<SpecialDiscount> discounts) {
         this.discounts = discounts;
 

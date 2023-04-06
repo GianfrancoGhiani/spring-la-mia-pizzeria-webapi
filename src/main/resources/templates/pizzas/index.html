@@ -33,8 +33,8 @@
                 <tr>
                     <th>Name</th>
                     <th>Price</th>
-                    <th>Description</th>
                     <th>Discount</th>
+                    <th>Description</th>
                     <th class="text-center">Edit</th>
                 </tr>
                 </thead>
@@ -44,8 +44,8 @@
                         <a th:href="@{/pizzas/{id}(id= *{getId()})}" th:text="*{getName()}" title="View Details"></a>
                     </td>
                     <td th:text="|€ *{getPrice()}|" class="text-center"></td>
+                    <td class="text-center"><i class="fa-regular " th:classAppend="${pizza.hasAvailableDiscount}? 'fa-circle-check' : 'fa-circle-xmark'"></i></td>
                     <td th:text="*{getDescription()}"></td>
-                    <td class="text-center"><i class="fa-regular " th:classAppend="${pizza.discounts.size >0}? 'fa-circle-check' : 'fa-circle-xmark'"></i></td>
                     <td><a th:href="@{/pizzas/edit/{id}(id=*{getId()})}" class="btn btn-primary me-2"><i class="fa-solid fa-pen"></i></a><a th:href="@{/pizzas/delete/{id}(id=*{getId()})}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a></td>
                 </tr>
                 </tbody>

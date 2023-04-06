@@ -18,6 +18,7 @@ public class DiscountService {
     public SpecialDiscount createDiscount(SpecialDiscount form){
         SpecialDiscount discountToSave = new SpecialDiscount();
         discountToSave.setTitle(form.getTitle());
+        discountToSave.setValue(form.getValue());
         discountToSave.setStartingDate(form.getStartingDate());
         discountToSave.setExpiringDate(form.getExpiringDate());
         discountToSave.setPizza(form.getPizza());
@@ -26,6 +27,7 @@ public class DiscountService {
     public SpecialDiscount updateDiscount(SpecialDiscount form, Integer id){
         SpecialDiscount discountToUpdate = getDiscountById(id);
         discountToUpdate.setTitle(form.getTitle());
+        discountToUpdate.setValue(form.getValue());
         if (form.getStartingDate() != null){
             discountToUpdate.setStartingDate(form.getStartingDate());
         }
@@ -34,5 +36,15 @@ public class DiscountService {
         }
         discountToUpdate.setPizza(form.getPizza());
         return discountRepository.save(discountToUpdate);
+    }
+
+    public boolean deleteById(Integer id){
+        discountRepository.findById(id).orElseThrow(()->new RuntimeException("no discount founded"));
+        try{
+            discountRepository.deleteById(id);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 }

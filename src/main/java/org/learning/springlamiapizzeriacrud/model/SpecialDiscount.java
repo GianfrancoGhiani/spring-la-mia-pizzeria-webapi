@@ -1,6 +1,7 @@
 package org.learning.springlamiapizzeriacrud.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -13,6 +14,10 @@ public class SpecialDiscount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false)
+    @Min(value = 0, message = "the discount value must be greater than zero")
+    private double value;
 
     @Column(nullable = false)
     private LocalDate startingDate;
@@ -36,11 +41,22 @@ public class SpecialDiscount {
         this.pizza = pizza;
     }
     public SpecialDiscount(){}
-    public SpecialDiscount(Integer id, LocalDate startingDate, LocalDate expiringDate, String title) {
+
+    public SpecialDiscount(Integer id, double value, LocalDate startingDate, LocalDate expiringDate, String title, Pizza pizza) {
         this.id = id;
+        this.value = value;
         this.startingDate = startingDate;
         this.expiringDate = expiringDate;
         this.title = title;
+        this.pizza = pizza;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 
     public Integer getId() {

@@ -19,7 +19,7 @@
                 th:action="@{${formAction}}" method="post" th:object="${discount}" class="row row-cols-1">
             <div class="col py-3">
                 <input type="hidden" th:field="*{pizza}">
-                <label for="name">Name:</label>
+                <label for="name">Name*:</label>
                 <input class="form-control form-control-sm" th:errorClass="is-invalid" id="name" type="text" placeholder="Easter Discount" th:field="*{title}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}">
                     <ul>
@@ -28,7 +28,16 @@
                 </div>
             </div>
             <div class="col py-3">
-                <label for="startingDate">Starting Date: </label>
+                <label for="value">Discount value*:</label>
+                <input class="form-control form-control-sm" th:errorClass="is-invalid" id="value" type="number" min="0" step="0.1" th:field="*{value}">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('value')}">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('value')}" th:text="${err}"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col py-3">
+                <label for="startingDate">Starting Date*: </label>
                 <input class="form-control form-control-sm" th:errorClass="is-invalid" id="startingDate" type="date" th:field="*{startingDate}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('startingDate')}">
                     <ul>
@@ -37,7 +46,7 @@
                 </div>
             </div>
             <div class="col">
-                <label for="expiringDate">Expiring Date: </label>
+                <label for="expiringDate">Expiring Date*: </label>
                 <input class="form-control form-control-sm" th:errorClass="is-invalid" id="expiringDate" type="date" th:field="*{expiringDate}">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('expiringDate')}">
                     <ul>
