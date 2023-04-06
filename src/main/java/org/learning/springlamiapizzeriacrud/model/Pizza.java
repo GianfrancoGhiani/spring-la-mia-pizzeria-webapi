@@ -42,7 +42,7 @@ public class Pizza {
     public boolean hasAvailableDiscount(){
         if (discounts != null){
             for (SpecialDiscount d: discounts) {
-                if (d.getExpiringDate().isAfter(LocalDate.now()))return true;
+                if (!d.getExpiringDate().isBefore(LocalDate.now()) && !d.getStartingDate().isAfter(LocalDate.now()))return true;
             }
         }
         return false;
@@ -52,10 +52,11 @@ public class Pizza {
             double tempPrice = this.price;
             for (SpecialDiscount d: discounts) {
                 if (!d.getExpiringDate().isBefore(LocalDate.now()) && !d.getStartingDate().isAfter(LocalDate.now())){
-                    tempPrice = tempPrice - (tempPrice * (d.getValue()/100));
+                    tempPrice = tempPrice * ((1 - (d.getValue()/100)));
                 }
             }
-            return tempPrice;
+            return (Math.round(tempPrice * 100)) / (double)100;
+
         }
         return price;
     }

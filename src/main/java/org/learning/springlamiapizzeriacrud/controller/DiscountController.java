@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,10 +40,13 @@ public class DiscountController {
     public String createDiscountDB(
             @Valid @ModelAttribute("discount") SpecialDiscount discount, BindingResult bindingResult,
             Model model, RedirectAttributes redirectAttributes){
+        if (discount.getExpiringDate().isBefore(discount.getStartingDate())){
+            bindingResult.addError(new FieldError("discount", "expiringDate", discount.getExpiringDate(), false, null ,null, "The Expiring Date must be after the Starting Date"));
+        }
         if(bindingResult.hasErrors()){
             return "/discounts/editCreate";
         }
-        System.out.println(discount);
+
         discountService.createDiscount(discount);
         redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Discount Added"));
         return "redirect:/pizzas/"+Integer.toString(discount.getPizza().getId());
@@ -66,7 +70,7 @@ public class DiscountController {
         if(bindingResult.hasErrors()){
             return "/discounts/editCreate";
         }
-        System.out.println(d_id);
+
         discountService.updateDiscount(discount, d_id);
         redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Discount " + discount.getTitle() +" Updated"));
         return "redirect:/pizzas/"+Integer.toString(discount.getPizza().getId());
