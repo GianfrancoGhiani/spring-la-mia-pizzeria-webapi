@@ -42,7 +42,15 @@
                 <ul>
                     <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
                 </ul>
-            </div>        </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h4>Ingredients: </h4>
+            <div class="form-check" th:each="ingred : ${ingredients}" th:object="${ingred}">
+                <input class="form-check-input" type="checkbox" th:value="*{id}"
+                       th:id="|ing_*{id}|" th:field="${pizza.ingredients}">
+                <label class="form-check-label" th:for="|ing_*{id}|" th:text="*{name}"></label>
+            </div>
         <div class="col py-3">
             <button type="submit" class="btn btn-primary" th:text="${isEdit? 'Update' : 'Create'}"></button>
             <button type="reset" class="btn btn-warning">Reset</button>

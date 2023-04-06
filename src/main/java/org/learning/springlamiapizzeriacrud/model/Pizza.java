@@ -30,7 +30,11 @@ public class Pizza {
     @Positive(message = "the price must be greater than 0")
     private double price;
 
-
+    @ManyToMany
+    @JoinTable(name = "ingredients_pizzas",
+    joinColumns = @JoinColumn(name = "pizza_id"),
+    inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    private List<Ingredient> ingredients;
 
 
     @OneToMany(mappedBy = "pizza")
@@ -60,6 +64,16 @@ public class Pizza {
         }
         return price;
     }
+
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public void setDiscounts(List<SpecialDiscount> discounts) {
         this.discounts = discounts;
 

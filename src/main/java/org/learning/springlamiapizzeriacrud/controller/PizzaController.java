@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.learning.springlamiapizzeriacrud.model.AlertMessage;
 import org.learning.springlamiapizzeriacrud.model.AlertMessage.AlertMessageType;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
+import org.learning.springlamiapizzeriacrud.service.IngredientService;
 import org.learning.springlamiapizzeriacrud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,8 @@ import java.util.Optional;
 public class PizzaController {
     @Autowired
     private PizzaService pizzaService;
+    @Autowired
+    private IngredientService ingredientService;
 
     @GetMapping
     public String index(Model model, @RequestParam(name = "name", required = false) Optional<String> name){
@@ -55,6 +58,7 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model){
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredients", ingredientService.getAll());
         return "/pizzas/editCreate";
     }
     @PostMapping("/create")
@@ -72,6 +76,7 @@ public class PizzaController {
         try {
             Pizza pizza = pizzaService.getPizzaById(id);
             model.addAttribute("pizza", pizza);
+            model.addAttribute("ingredients", ingredientService.getAll());
             return "/pizzas/editCreate";
         } catch (RuntimeException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This pizza is not in our database");

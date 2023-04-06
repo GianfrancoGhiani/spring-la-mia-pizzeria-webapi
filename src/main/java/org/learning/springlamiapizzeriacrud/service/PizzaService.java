@@ -19,6 +19,7 @@ public class PizzaService {
         pizzaToDB.setName(form.getName());
         pizzaToDB.setDescription(form.getDescription());
         pizzaToDB.setPrice(form.getPrice());
+        pizzaToDB.setIngredients(form.getIngredients());
         return pizzaRepository.save(pizzaToDB);
     }
     public Pizza updatePizza(Pizza form, Integer id){
@@ -26,6 +27,7 @@ public class PizzaService {
         pizzaToDB.setName(form.getName());
         pizzaToDB.setDescription(form.getDescription());
         pizzaToDB.setPrice(form.getPrice());
+        pizzaToDB.setIngredients(form.getIngredients());
         return pizzaRepository.save(pizzaToDB);
     }
 
