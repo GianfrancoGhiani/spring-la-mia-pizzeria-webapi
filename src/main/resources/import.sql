@@ -37,3 +37,16 @@ INSERT INTO db_pizzeria.ingredients_pizzas(pizza_id, ingredient_id)VALUES(3, 5);
 INSERT INTO db_pizzeria.ingredients_pizzas(pizza_id, ingredient_id)VALUES(1, 5);
 INSERT INTO db_pizzeria.ingredients_pizzas(pizza_id, ingredient_id)VALUES(2, 5);
 INSERT INTO db_pizzeria.ingredients_pizzas(pizza_id, ingredient_id)VALUES(3, 3);
+
+
+INSERT INTO db_pizzeria.users(email, nickname, password)VALUES('john@email.com', 'john', '{noop}john');
+INSERT INTO db_pizzeria.users(email, nickname, password)VALUES('anna@email.com', 'anna', '{noop}anna');
+INSERT INTO db_pizzeria.users(email, nickname, password)VALUES('carlo@email.com', 'carlo', '{noop}carlo');
+
+INSERT INTO db_pizzeria.roles(name)VALUES('ADMIN');
+INSERT INTO db_pizzeria.roles(name)VALUES('USER');
+
+INSERT INTO db_pizzeria.users_roles(user_id, roles_id)VALUES(1, 1);
+INSERT INTO db_pizzeria.users_roles(user_id, roles_id)VALUES(2, 2);
+INSERT INTO db_pizzeria.users_roles(user_id, roles_id)VALUES(3, 1);
+INSERT INTO db_pizzeria.users_roles(user_id, roles_id)VALUES(3, 2);

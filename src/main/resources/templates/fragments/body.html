@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+    <nav th:fragment="navbar" class="d-flex align-items-center justify-content-end bg-none w-75 " id="my-navbar">
+        <a th:href="@{/logout}"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+    </nav>
+
     <p th:fragment="AlertMessage" th:if="${message}" class="alert fade show" th:classAppend="${#strings.equals(message.type, 'SUCCESS')} ? alert-success : alert-danger" th:text="${message.text}"></p>
 
 </body>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <div th:replace="~{fragments/head :: headResources}"></div>
@@ -7,6 +8,8 @@
     <title>Pizza [[${pizza.getName()}]]</title>
 </head>
 <body>
+<div th:replace="~{fragments/body :: navbar}"></div>
+
 <div class="d-flex align-items-center justify-content-center flex-column wrapper" th:object="${pizza}">
     <div class="content">
         <a th:href="@{/pizzas}" class="back-arrow"><i class="fa-solid fa-arrow-left"></i></a>
@@ -20,7 +23,8 @@
                 <h5 class="col-3" th:text="${pizza.discounts.size > 0} ? 'Active Discounts:' : 'No Active Discounts'"></h5>
 
                 <div th:replace="~{fragments/body :: AlertMessage}"></div>
-                <a class="col-auto btn btn-primary" th:href="@{/discount/create(p_id=${pizza.id})}">Add a Discount</a>
+                <a class="col-auto btn btn-primary" th:href="@{/discount/create(p_id=${pizza.id})}"
+                   sec:authorize="hasAuthority('ADMIN')">Add a Discount</a>
             </div>
 
         <table th:if="${pizza.discounts.size > 0}">
@@ -30,7 +34,7 @@
                 <th class="text-center">Value</th>
                 <th class="text-center">Starting</th>
                 <th class="text-center">Expiring</th>
-                <th class="text-center">Edit</th>
+                <th class="text-center" sec:authorize="hasAuthority('ADMIN')">Edit</th>
             </tr>
             </thead>
             <tbody>
@@ -39,7 +43,7 @@
                 <td class="text-center" th:text="*{value}"></td>
                 <td th:text="*{startingDate}" class="text-center"></td>
                 <td th:text="*{expiringDate}"></td>
-                <td><a th:href="@{/discount/edit/{d_id}(d_id=${d.id})}" class="btn btn-primary me-2"><i class="fa-solid fa-pen"></i></a>
+                <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/discount/edit/{d_id}(d_id=${d.id})}" class="btn btn-primary me-2"><i class="fa-solid fa-pen"></i></a>
                     <a th:href="@{/discount/delete/{d_id}(d_id=${d.id})}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                 </td>
             </tr>

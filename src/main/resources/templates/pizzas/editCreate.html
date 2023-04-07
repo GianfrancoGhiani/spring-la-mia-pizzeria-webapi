@@ -7,6 +7,8 @@
     <title th:text="${pizza.id != null} ? 'Editing '+${pizza.name} : 'Pizza Creation'"></title>
 </head>
 <body th:with="isEdit=${pizza.id != null}">
+<div th:replace="~{fragments/body :: navbar}"></div>
+
 <div class="d-flex align-items-center justify-content-center flex-column wrapper" th:object="${pizza}">
     <div class="content">
         <div class="d-flex justify-content-between align-items-center">
