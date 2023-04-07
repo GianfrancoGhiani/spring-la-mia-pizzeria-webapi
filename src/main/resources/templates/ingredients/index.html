@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <div th:replace="~{fragments/head :: headResources}"></div>
@@ -29,12 +29,17 @@
             <tr th:each="i : ${list}" th:object="${i}">
                 <td th:text="*{name}" class="text-capitalize"></td>
                 <td class="text-center" th:text="*{description}"></td>
-                <td class="text-center"><a th:href="@{|/ingredients/delete/${i.id}|}"><i class="fa-solid fa-circle-minus"></i></a></td>
+                <td class="text-center">
+                    <a th:href="@{/ingredients(i_id=${i.id})}"><i class="fa-solid fa-pen"></i></a>
+                    <a th:href="@{|/ingredients/delete/${i.id}|}"><i class="fa-solid fa-circle-minus"></i></a>
+                </td>
 
             </tr>
             </tbody>
         </table>
-        <form th:action="@{/ingredients/create}" method="post" class="offset-2 col-4 row" th:object="${ingredient}">
+        <form
+                th:with="formAction = ${(ingredient.id != null) ? '/ingredients/edit/' + ingredient.id : '/ingredients/create' }"
+                th:action="@{${formAction}}" method="post" class="offset-2 col-4 row" th:object="${ingredient}">
             <input class="form-control" type="text" placeholder="New ingredient name..." th:field="*{name}" id="name">
             <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
                 <ul>

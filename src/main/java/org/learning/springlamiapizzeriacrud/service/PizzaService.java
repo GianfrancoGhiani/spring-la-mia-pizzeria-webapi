@@ -39,7 +39,7 @@ public class PizzaService {
     }
 
     public Pizza getPizzaById(Integer id) throws RuntimeException{
-        return pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("no pizzas founded"));
+        return pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("no pizzas found"));
     }
 
     public boolean deleteById(Integer id) throws RuntimeException{

@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/ingredients")
 public class IngredientController {
@@ -19,9 +21,13 @@ public class IngredientController {
 
 
     @GetMapping
-    public String index(Model model){
+    public String index(@RequestParam(value = "i_id", required = false) Optional<Integer> i_id , Model model){
         model.addAttribute("list", ingredientService.getAll());
-        model.addAttribute("ingredient", new Ingredient());
+        if(i_id.isPresent()){
+            model.addAttribute("ingredient", ingredientService.getById(i_id.get()));
+        } else {
+            model.addAttribute("ingredient", new Ingredient());
+        }
         return "ingredients/index";
     }
 
@@ -32,6 +38,16 @@ public class IngredientController {
             return "ingredients/index";
         }
         ingredientService.create(ingredient);
+        return "redirect:/ingredients";
+    }
+
+    @PostMapping("/edit/{i_id}")
+    public String edit(@Valid@ModelAttribute(name = "ingredient")Ingredient ingredient, BindingResult bindingResult,@PathVariable("i_id") Integer i_id, Model model){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("list", ingredientService.getAll());
+            return "ingredients/index";
+        }
+        ingredientService.update(ingredient, i_id);
         return "redirect:/ingredients";
     }
     @GetMapping("/delete/{id}")
