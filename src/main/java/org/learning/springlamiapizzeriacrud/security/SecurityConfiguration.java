@@ -31,9 +31,8 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests()
-                .requestMatchers("/api", "/api/**").permitAll()
                 .requestMatchers("/pizzas/create", "/pizzas/edit/**" , "/discount/**").hasAuthority("ADMIN")
-                .requestMatchers("/**","/pizzas/**", "/ingredients/**").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/**","/pizzas/**", "/ingredients/**", "/api", "/api/**").permitAll()
                 .and().formLogin()
                 .and().logout()
                 .and().exceptionHandling();

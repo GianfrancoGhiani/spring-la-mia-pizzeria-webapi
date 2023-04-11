@@ -1,6 +1,7 @@
 package org.learning.springlamiapizzeriacrud.api;
 
 import jakarta.validation.Valid;
+import org.learning.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
 import org.learning.springlamiapizzeriacrud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +67,10 @@ public class PizzaRestController {
             if (!success) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "Unable to delete this element");
             }
-        } catch (RuntimeException e) {
+        } catch (PizzaNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } catch (RuntimeException e){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 }
