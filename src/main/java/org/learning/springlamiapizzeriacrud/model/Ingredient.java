@@ -1,5 +1,6 @@
 package org.learning.springlamiapizzeriacrud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -19,6 +20,7 @@ public class Ingredient {
     @Size(max = 200,message = "the name can have at least 200 char")
     private String description;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "ingredients")
     private List<Pizza> pizzas;
 

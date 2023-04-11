@@ -63,6 +63,9 @@ public class PizzaController {
     }
     @PostMapping("/create")
     public String createDBInstance(@Valid @ModelAttribute("pizza") Pizza form,  BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
+        if (!pizzaService.isUniqueName(form, null)){
+            bindingResult.addError(new FieldError("pizza", "name", form.getName(), false, null, null, "Name must be unique"));
+        }
         if(bindingResult.hasErrors()){
             return "/pizzas/editCreate";
         }
@@ -85,7 +88,7 @@ public class PizzaController {
     }
     @PostMapping("/edit/{id}")
     public String editUpdate(@Valid @ModelAttribute("pizza") Pizza form,  BindingResult bindingResult, Model model,  @PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
-        if (!pizzaService.isUniqueName(form)){
+        if (!pizzaService.isUniqueName(form, id)){
             bindingResult.addError(new FieldError("pizza", "name", form.getName(), false, null, null, "Name must be unique"));
         }
         if(bindingResult.hasErrors()){

@@ -1,5 +1,6 @@
 package org.learning.springlamiapizzeriacrud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -30,6 +31,7 @@ public class SpecialDiscount {
     @Size(max = 30, message = "This title is too long (max 30 char)")
     private String title;
 
+    @JsonIgnore
     @ManyToOne
     private Pizza pizza;
 

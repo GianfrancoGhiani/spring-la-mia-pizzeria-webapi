@@ -31,11 +31,13 @@ public class SecurityConfiguration {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests()
+                .requestMatchers("/api", "/api/**").permitAll()
                 .requestMatchers("/pizzas/create", "/pizzas/edit/**" , "/discount/**").hasAuthority("ADMIN")
                 .requestMatchers("/**","/pizzas/**", "/ingredients/**").hasAnyAuthority("USER", "ADMIN")
                 .and().formLogin()
                 .and().logout()
                 .and().exceptionHandling();
+        httpSecurity.csrf().disable();
         return httpSecurity.build();
     }
 }

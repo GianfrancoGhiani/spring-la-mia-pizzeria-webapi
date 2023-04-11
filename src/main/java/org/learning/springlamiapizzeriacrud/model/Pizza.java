@@ -1,5 +1,6 @@
 package org.learning.springlamiapizzeriacrud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -29,6 +30,7 @@ public class Pizza {
     @Column(nullable = false)
     @Positive(message = "the price must be greater than 0")
     private double price;
+
 
     @ManyToMany
     @JoinTable(name = "ingredients_pizzas",
