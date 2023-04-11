@@ -1,6 +1,8 @@
 package org.learning.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
+import org.learning.springlamiapizzeriacrud.exceptions.DiscountNotFoundException;
+import org.learning.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import org.learning.springlamiapizzeriacrud.model.AlertMessage;
 import org.learning.springlamiapizzeriacrud.model.AlertMessage.AlertMessageType;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
@@ -30,7 +32,7 @@ public class DiscountController {
             discount.setPizza(pizza);
             model.addAttribute("discount", discount);
             return "/discounts/editCreate";
-        } catch (Exception e){
+        } catch (PizzaNotFoundException e){
             redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR, "Error finding your pizza"));
             return "redirect:/pizzas";
         }
@@ -57,7 +59,7 @@ public class DiscountController {
             SpecialDiscount discount = discountService.getDiscountById(d_id);
             model.addAttribute("discount", discount);
             return "/discounts/editCreate";
-        } catch (Exception e){
+        } catch (PizzaNotFoundException e){
             redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR, "Error finding your pizza"));
             return "redirect:/pizzas";
         }
@@ -85,7 +87,7 @@ public class DiscountController {
             } else {
                 redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR,"Unable to delete this item"));
             }
-        }catch (Exception e){
+        }catch (DiscountNotFoundException e){
             redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR,"No Discount founded"));
         }
         return "redirect:/pizzas/" + pizzaId;

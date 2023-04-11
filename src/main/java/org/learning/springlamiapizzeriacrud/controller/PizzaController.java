@@ -1,6 +1,7 @@
 package org.learning.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
+import org.learning.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import org.learning.springlamiapizzeriacrud.model.AlertMessage;
 import org.learning.springlamiapizzeriacrud.model.AlertMessage.AlertMessageType;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
@@ -49,7 +50,7 @@ public class PizzaController {
         try{
             Pizza pizza = pizzaService.getPizzaById(id);
             model.addAttribute("pizza", pizza);
-        } catch (RuntimeException e){
+        } catch (PizzaNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This pizza is not in our database");
         }
 
@@ -81,7 +82,7 @@ public class PizzaController {
             model.addAttribute("pizza", pizza);
             model.addAttribute("ingredients", ingredientService.getAll());
             return "/pizzas/editCreate";
-        } catch (RuntimeException e){
+        } catch (PizzaNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This pizza is not in our database");
         }
 
@@ -99,7 +100,7 @@ public class PizzaController {
             Pizza pizza = pizzaService.updatePizza(form, id);
             redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.SUCCESS, "Pizza " +form.getName() + " updated"));
             return "redirect:/pizzas/"+ Integer.toString(pizza.getId());
-        } catch (RuntimeException e){
+        } catch (PizzaNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This pizza is not in our database");
         }
     }
@@ -112,8 +113,8 @@ public class PizzaController {
             } else {
                 redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR,"Unable to delete this item"));
             }
-        }catch (Exception e){
-                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR,"No Pizza founded"));
+        }catch (PizzaNotFoundException e){
+                redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessageType.ERROR,"No Pizza found"));
         }
         return "redirect:/pizzas";
     }

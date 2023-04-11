@@ -1,5 +1,6 @@
 package org.learning.springlamiapizzeriacrud.service;
 
+import org.learning.springlamiapizzeriacrud.exceptions.DiscountNotFoundException;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
 import org.learning.springlamiapizzeriacrud.model.SpecialDiscount;
 import org.learning.springlamiapizzeriacrud.repository.DiscountRepository;
@@ -12,7 +13,7 @@ public class DiscountService {
     DiscountRepository discountRepository;
 
     public SpecialDiscount getDiscountById(Integer id){
-        return discountRepository.findById(id).orElseThrow(()->new RuntimeException("no discount founded"));
+        return discountRepository.findById(id).orElseThrow(()->new DiscountNotFoundException("no discount founded"));
     }
 
     public SpecialDiscount createDiscount(SpecialDiscount form){
@@ -39,7 +40,7 @@ public class DiscountService {
     }
 
     public boolean deleteById(Integer id){
-        discountRepository.findById(id).orElseThrow(()->new RuntimeException("no discount founded"));
+        discountRepository.findById(id).orElseThrow(()->new DiscountNotFoundException("no discount found"));
         try{
             discountRepository.deleteById(id);
             return true;

@@ -1,5 +1,7 @@
 package org.learning.springlamiapizzeriacrud.service;
 
+import org.learning.springlamiapizzeriacrud.exceptions.IngredientNotFoundException;
+import org.learning.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
 import org.learning.springlamiapizzeriacrud.model.Ingredient;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
 import org.learning.springlamiapizzeriacrud.repository.IngredientRepository;
@@ -43,7 +45,7 @@ public class PizzaService {
 
         if (form.getIngredients() != null) {
             for (Ingredient i : form.getIngredients()) {
-                formIngredients.add(ingredientRepository.findById(i.getId()).orElseThrow( ()-> new RuntimeException("Ingredient not found")));
+                formIngredients.add(ingredientRepository.findById(i.getId()).orElseThrow( ()-> new IngredientNotFoundException("Ingredient not found")));
             }
         }
         return formIngredients;
@@ -58,12 +60,12 @@ public class PizzaService {
     }
 
     public Pizza getPizzaById(Integer id) throws RuntimeException{
-        return pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("no pizzas found"));
+        return pizzaRepository.findById(id).orElseThrow(()->new PizzaNotFoundException("no pizzas found"));
     }
 
     public boolean deleteById(Integer id) throws RuntimeException{
         //try to find the pizza into the DB
-        pizzaRepository.findById(id).orElseThrow(()->new RuntimeException("no pizzas founded"));
+        pizzaRepository.findById(id).orElseThrow(()->new PizzaNotFoundException("no pizzas found"));
         //if founded it will continue, else it throws
         try{
             //'cause pizza was fins, delete this item
