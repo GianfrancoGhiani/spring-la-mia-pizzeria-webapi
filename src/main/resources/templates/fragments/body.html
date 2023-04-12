@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
     <nav th:fragment="navbar" class="d-flex align-items-center justify-content-end bg-none w-75 " id="my-navbar">
-        <a th:href="@{/logout}"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        <a th:href="@{/logout}" sec:authorize="isAuthenticated()"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        <a th:href="@{/login}" sec:authorize="!isAuthenticated()"><i class="fa-solid fa-user"></i></a>
     </nav>
 
     <p th:fragment="AlertMessage" th:if="${message}" class="alert fade show" th:classAppend="${#strings.equals(message.type, 'SUCCESS')} ? alert-success : alert-danger" th:text="${message.text}"></p>

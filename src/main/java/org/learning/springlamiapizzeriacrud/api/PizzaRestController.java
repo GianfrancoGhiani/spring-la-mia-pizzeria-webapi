@@ -2,7 +2,9 @@ package org.learning.springlamiapizzeriacrud.api;
 
 import jakarta.validation.Valid;
 import org.learning.springlamiapizzeriacrud.exceptions.PizzaNotFoundException;
+import org.learning.springlamiapizzeriacrud.model.Ingredient;
 import org.learning.springlamiapizzeriacrud.model.Pizza;
+import org.learning.springlamiapizzeriacrud.service.IngredientService;
 import org.learning.springlamiapizzeriacrud.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -22,12 +25,18 @@ import java.util.Optional;
 public class PizzaRestController {
     @Autowired
     PizzaService pizzaService;
+    @Autowired
+    IngredientService ingredientService;
     @GetMapping
     public List<Pizza> getAllPizzas(@RequestParam(name = "name", required = false) Optional<String> name){
         if (name.isPresent()){
             return pizzaService.getFilteredPizzas(name.get());
         }
         return pizzaService.getAllPizzas();
+    }
+    @GetMapping("/ingredients")
+    public List<Ingredient> getAllIngredients(){
+        return ingredientService.getAll();
     }
 
     @GetMapping("/{id}")

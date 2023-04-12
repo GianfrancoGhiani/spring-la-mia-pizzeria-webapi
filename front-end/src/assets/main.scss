@@ -1,0 +1,12 @@
+$fa-font-path: "./webfonts";
+
+@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '@fortawesome/fontawesome-free/scss/solid.scss';
+@import '@fortawesome/fontawesome-free/scss/brands.scss';
+@import 'bootstrap/scss/bootstrap';
+
+body{
+    background-image: url('https://thumbs.dreamstime.com/b/pizza-pattern-drawing-background-junk-food-seamless-hand-drawn-wrapping-decoration-print-pizza-pattern-drawing-background-151935075.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}

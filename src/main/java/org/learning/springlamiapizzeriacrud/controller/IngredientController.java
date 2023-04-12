@@ -1,6 +1,7 @@
 package org.learning.springlamiapizzeriacrud.controller;
 
 import jakarta.validation.Valid;
+import org.learning.springlamiapizzeriacrud.exceptions.IngredientNotFoundException;
 import org.learning.springlamiapizzeriacrud.model.AlertMessage;
 import org.learning.springlamiapizzeriacrud.model.Ingredient;
 import org.learning.springlamiapizzeriacrud.service.IngredientService;
@@ -54,6 +55,9 @@ public class IngredientController {
     public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         try{
             ingredientService.deleteById(id);
+            return "redirect:/ingredients";
+        } catch (IngredientNotFoundException e){
+            redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.ERROR,"No Ingredient found"));
             return "redirect:/ingredients";
         } catch (Exception e){
             redirectAttributes.addFlashAttribute("message", new AlertMessage(AlertMessage.AlertMessageType.ERROR, "Unable to delete this ingredient"));

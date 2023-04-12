@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,15 +34,20 @@ public class Pizza {
     private double price;
 
 
+
     @ManyToMany
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(name = "ingredients_pizzas",
     joinColumns = @JoinColumn(name = "pizza_id"),
     inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private List<Ingredient> ingredients;
 
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", cascade = CascadeType.REMOVE)
     private List<SpecialDiscount> discounts;
+
+
+
     public List<SpecialDiscount> getDiscounts() {
         return discounts;
     }
